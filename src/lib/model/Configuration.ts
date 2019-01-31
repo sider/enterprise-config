@@ -26,8 +26,19 @@ function randomString(length: number): string {
   return Array<undefined>(length).fill(undefined).map(_ => chars.charAt(Math.floor(Math.random() * chars.length))).join("")
 }
 
+export default interface Configuration {
+  readonly endpoint: string | undefined
+  readonly email: EmailConfig
+  readonly sideci: SideCI
+  readonly catpost: Catpost
+  readonly setaria: Setaria
+  readonly mysqlHost: string | undefined
+  readonly redisHost: string | undefined
+}
+
 export function generateRandomConfiguration(): Configuration {
   return {
+    endpoint: undefined,
     email: {},
     sideci: {
       secretKeyBase: randomString(128),
@@ -44,13 +55,9 @@ export function generateRandomConfiguration(): Configuration {
       secretKeyBase: randomString(128),
       apiSecret: randomString(32),
       sshSecretKeyEncryptionKey: randomString(32),
-    }
+    },
+    mysqlHost: undefined,
+    redisHost: undefined
   }
 }
 
-export default interface Configuration {
-  readonly email: EmailConfig
-  readonly sideci: SideCI
-  readonly catpost: Catpost
-  readonly setaria: Setaria
-}

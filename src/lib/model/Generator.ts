@@ -1,5 +1,13 @@
-import Configuration from "./Configuration";
+import {default as Configuration } from "./Configuration";
 import ConfigFile from "./ConfigFile";
+
+function databaseURL(host: string, dbname: string): string {
+  return `mysql2://${host}/${dbname}`
+}
+
+function redisURL(host: string, index: number): string {
+  return `redis://${host}/${index}`
+}
 
 function generateSideCIConfig(config: Configuration): ConfigFile {
   const file = new ConfigFile("sideci.env")
@@ -7,6 +15,11 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
   file.newSection(["General Configuration"], section => {
     section.requiredConfig("BASE_URL")
       .withDescription("URL to allow end users to access Sider.")
+      .continue(option => {
+        if (config.endpoint) {
+          option.withValue(config.endpoint)
+        }
+      })
     section.requiredConfig("DOCS_PAGE_URL")
       .withDescription("URL which points to document page.")
       .withValue("https://help.sider.review")
@@ -47,6 +60,11 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
   ], section => {
     section.requiredConfig("DATABASE_URL")
       .withDescription("URL to connect database.")
+      .continue(option => {
+        if (config.mysqlHost) {
+          option.withValue(databaseURL(config.mysqlHost, "sideci"))
+        }
+      })
   })
   
   file.newSection([
@@ -63,6 +81,11 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
   ], section => {
     section.requiredConfig("REDIS_URL")
       .withDescription("URL to connect Redis.")
+      .continue(option => {
+        if (config.redisHost) {
+          option.withValue(redisURL(config.redisHost, 0))
+        }
+      })
   })
   
   file.newSection(["Catpost Configuration"], section => {
@@ -233,6 +256,11 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
   ], section => {
     section.requiredConfig("DATABASE_URL")
       .withDescription("URL to connect database.")
+      .continue(option => {
+        if (config.mysqlHost) {
+          option.withValue(databaseURL(config.mysqlHost, "catpost"))
+        }
+      })
   })
   
   file.newSection([
@@ -249,6 +277,11 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
   ], section => {
     section.requiredConfig("REDIS_URL")
       .withDescription("URL to connect Redis.")
+      .continue(option => {
+        if (config.redisHost) {
+          option.withValue(redisURL(config.redisHost, 1))
+        }
+      })
   })
   
   file.newSection([
@@ -374,6 +407,12 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
   ], section => {
     section.requiredConfig("DATABASE_URL")
       .withDescription("URL to connect database.")
+      .continue(option => {
+        if (config.mysqlHost) {
+          option.withValue(databaseURL(config.mysqlHost, "setaria"))
+        }
+      })
+
   })
   
   file.newSection([
@@ -390,6 +429,11 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
   ], section => {
     section.requiredConfig("REDIS_URL")
       .withDescription("URL to connect Redis.")
+      .continue(option => {
+        if (config.redisHost) {
+          option.withValue(redisURL(config.redisHost, 2))
+        }
+      })
   })
   
   file.newSection([

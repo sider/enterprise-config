@@ -10,6 +10,10 @@ export class Config {
     this.value = value
     this.optional = optional
   }
+
+  continue(k: (option: Config) => void): void {
+    k(this)
+  }
   
   withValue(value: string): Config {
     this.value = value
