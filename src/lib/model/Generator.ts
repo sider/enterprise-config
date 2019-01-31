@@ -312,30 +312,53 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
         "Minio endpoint, something like `http://object_storage:9000`.",
         "Remove the configuration if you use AWS S3."
       )
+      .continue(option => {
+        if (config.catpost.minio) {
+          option.withValue(config.catpost.minio.endpoint)
+        }
+      })
     section.requiredConfig("S3_BUCKET_NAME")
       .withDescription(
         "Object storage bucket name.",
         "Sider automatically creates the bucket if it doesn't exist on Minio.",
         "Specify the name of an existing bucket if you use AWS S3.",
       )
-      .withValue("sider")
+      .continue(option => {
+        if (config.catpost.minio) {
+          option.withValue(config.catpost.minio.bucketName)
+        }
+      })
     section.requiredConfig("S3_REGION_NAME")
       .withDescription(
         "Object storage region name.",
         "If you are using Minio, you can use any region name.",
         "Specify correct region name if you use AWS S3."
       )
-      .withValue("sider")
+      .continue(option => {
+        if (config.catpost.minio) {
+          option.withValue(config.catpost.minio.regionName)
+        }
+      })
     section.requiredConfig("AWS_ACCESS_KEY_ID")
       .withDescription(
         "Authorization for object storage.",
         "If you use AWS S3, you can authorize using IAM role and remove this configuration."
       )
+      .continue(option => {
+        if (config.catpost.minio) {
+          option.withValue(config.catpost.minio.accessKeyId)
+        }
+      })
     section.requiredConfig("AWS_SECRET_ACCESS_KEY")
       .withDescription(
         "Authorization for object storage.",
         "If you use AWS S3, you can authorize using IAM role and remove this configuration."
       )
+      .continue(option => {
+        if (config.catpost.minio) {
+          option.withValue(config.catpost.minio.secretAccessKey)
+        }
+      })
   })
   
   file.newSection([

@@ -2,6 +2,14 @@ export interface EmailConfig {
 
 }
 
+export interface MinioConfig {
+  readonly endpoint: string
+  readonly accessKeyId: string
+  readonly secretAccessKey: string
+  readonly bucketName: string
+  readonly regionName: string
+}
+
 export interface SideCI {
   readonly secretKeyBase: string
   readonly githubTokenEncryptionKey: string
@@ -13,6 +21,7 @@ export interface Catpost {
   readonly archiveURLEncryptionKey: string
   readonly archiveEncryptionKey: string
   readonly archiveNameSalt: string
+  readonly minio: MinioConfig | undefined
 }
 
 export interface Setaria {
@@ -50,6 +59,7 @@ export function generateRandomConfiguration(): Configuration {
       archiveURLEncryptionKey: randomString(32),
       archiveEncryptionKey: randomString(16),
       archiveNameSalt: randomString(16),
+      minio: undefined
     },
     setaria: {
       secretKeyBase: randomString(128),
