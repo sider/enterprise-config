@@ -91,6 +91,11 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
   file.newSection(["Catpost Configuration"], section => {
     section.requiredConfig("CATPOST_BASE_URL")
       .withDescription("URL which points to catpost endpoint.")
+      .continue(option => {
+        if (config.catpost.endpoint) {
+          option.withValue(config.catpost.endpoint)
+        }
+      })
     section.requiredConfig("CATPOST_SECRET")
       .withDescription("Random string used to authorize requests to catpost.")
       .withValue(config.catpost.apiSecret)
@@ -99,6 +104,11 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
   file.newSection(["Setaria Configuration"], section => {
     section.requiredConfig("SETARIA_BASE_URL")
       .withDescription("URL which points to setaria endpoint.")
+      .continue(option => {
+        if (config.setaria.endpoint) {
+          option.withValue(config.setaria.endpoint)
+        }
+      })
     section.requiredConfig("SETARIA_SECRET")
       .withDescription("Random string used to authorize requests to setaria.")
       .withValue(config.setaria.apiSecret)

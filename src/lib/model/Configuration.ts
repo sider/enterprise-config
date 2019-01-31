@@ -22,12 +22,14 @@ export interface Catpost {
   readonly archiveEncryptionKey: string
   readonly archiveNameSalt: string
   readonly minio: MinioConfig | undefined
+  readonly endpoint: string | undefined
 }
 
 export interface Setaria {
   readonly secretKeyBase: string
   readonly apiSecret: string
   readonly sshSecretKeyEncryptionKey: string
+  readonly endpoint: string | undefined
 }
 
 function randomString(length: number): string {
@@ -59,15 +61,17 @@ export function generateRandomConfiguration(): Configuration {
       archiveURLEncryptionKey: randomString(32),
       archiveEncryptionKey: randomString(16),
       archiveNameSalt: randomString(16),
-      minio: undefined
+      minio: undefined,
+      endpoint: undefined
     },
     setaria: {
       secretKeyBase: randomString(128),
       apiSecret: randomString(32),
       sshSecretKeyEncryptionKey: randomString(32),
+      endpoint: undefined
     },
     mysqlHost: undefined,
-    redisHost: undefined
+    redisHost: undefined,
   }
 }
 
