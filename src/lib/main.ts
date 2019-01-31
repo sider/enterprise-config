@@ -20,7 +20,7 @@ async function main(argv: string[]) {
   
   const dir = path.join(process.cwd(), argv[2] || ".")
   
-  if (!await promisify(fs.exists)(dir)) {
+  if (!fs.existsSync(dir)) {
     console.info(`Making dir: ${dir}...`)
     await mkdir(dir)
   }
