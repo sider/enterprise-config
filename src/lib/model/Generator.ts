@@ -36,16 +36,14 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
     "",
     "Database configuration of sideci is given through this environment variable.",
     "Sider supports MySQL 5.7 and assumes `mysql2` driver.",
-    "It will look like `mysql2://sider:topsecret@mysql:3306/sideci?charset=utf8mb4`.",
+    "It will look like `mysql2://sider:topsecret@mysql:3306/sideci`.",
     "",
     "* The username and password must be given if your server requires authentication.",
     "* You can choose arbitrary database name but the database should be dedicated for sideci.",
-    "* The charset parameter must be `utf8mb4`.",
     "",
-    "Read the Rails documentation for the detail.",
+    "Read the database configuration guide for the detail.",
     "",
-    "* https://guides.rubyonrails.org/configuring.html#configuring-a-database",
-    "",
+    "* https://help.sider.review/onprem/database",
   ], section => {
     section.requiredConfig("DATABASE_URL")
       .withDescription("URL to connect database.")
@@ -62,7 +60,6 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
     "Read the IANA documentation for the detail.",
     "",
     "* http://www.iana.org/assignments/uri-schemes/prov/redis",
-    ""
   ], section => {
     section.requiredConfig("REDIS_URL")
       .withDescription("URL to connect Redis.")
@@ -88,15 +85,38 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
     "GitHub Enterprise Configuration",
     "",
     "Configure access to your GitHub Enterprise.",
-    "Visit the GitHub application page to see the values.",
-    ""
+    "",
+    "Sider requires two GitHub integration; OAuth App and GitHub App.",
+    "Visit the GitHub Enterprise, register two applications, and fill the credentials.",
   ], section => {
-    section.requiredConfig("GITHUB_END_POINT")
-      .withDescription("URL which points to GitHub Enterprise web page.")
+    section.requiredConfig("GITHUB_ENDPOINT")
+      .withDescription(
+        "URL which points to GitHub Enterprise web page.",
+        "Example: https://github.example.com"
+       )
     section.requiredConfig("GITHUB_API_ENDPOINT")
-      .withDescription("URL which points to GitHub Enterprise API endpoint.")
+      .withDescription(
+        "URL which points to GitHub Enterprise API endpoint.",
+        "Example: https://github.example.com/api/v3/"
+      )
+
     section.requiredConfig("GITHUB_CLIENT_ID")
+      .withDescription("Client ID of the OAuth App.")
     section.requiredConfig("GITHUB_CLIENT_SECRET")
+      .withDescription("Client secret of the OAuth App.")
+
+    section.requiredConfig("GITHUB_APP_ID")
+      .withDescription("Application ID of the GitHub App.")
+    section.requiredConfig("GITHUB_APP_NAME")
+      .withDescription("Application name of the GitHub App.")
+    section.requiredConfig("GITHUB_APP_PRIVATE_KEY")
+      .withDescription("Base64 encoded private key of the GitHub App.")
+    section.requiredConfig("GITHUB_APP_OAUTH2_CLIENT_ID")
+      .withDescription("Client ID of the GitHub App.")
+    section.requiredConfig("GITHUB_APP_OAUTH2_CLIENT_SECRET")
+      .withDescription("Client secret of the GitHub App.")
+    section.requiredConfig("GITHUB_APP_WEBHOOK_SECRET")
+      .withDescription("Webhook secret of the GitHub App.")
   })
   
   file.newSection([
@@ -106,7 +126,6 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
     "Put the PUSHER_* values obtained from Pusher web page.",
     "",
     "You can optionally setup Loggly and Bugsnag integration.",
-    "",
   ], section => {
     section.requiredConfig("PUSHER_API_ID")
       .withDescription("Pusher API Configuration.")
@@ -203,16 +222,14 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
     "",
     "Database configuration of sideci is given through this environment variable.",
     "Sider supports MySQL 5.7 and assumes `mysql2` driver.",
-    "It will look like `mysql2://sider:topsecret@mysql:3306/catpost?charset=utf8mb4`.",
+    "It will look like `mysql2://sider:topsecret@mysql:3306/catpost`.",
     "",
     "* The username and password must be given if your server requires authentication.",
     "* You can choose arbitrary database name but the database should be dedicated for catpost.",
-    "* The charset parameter must be `utf8mb4`.",
     "",
-    "Read the Rails documentation for the detail.",
+    "Read the database configuration guide for the detail.",
     "",
-    "* https://guides.rubyonrails.org/configuring.html#configuring-a-database",
-    "",
+    "* https://help.sider.review/onprem/database",
   ], section => {
     section.requiredConfig("DATABASE_URL")
       .withDescription("URL to connect database.")
@@ -229,7 +246,6 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
     "Read the IANA documentation for the detail.",
     "",
     "* http://www.iana.org/assignments/uri-schemes/prov/redis",
-    ""
   ], section => {
     section.requiredConfig("REDIS_URL")
       .withDescription("URL to connect Redis.")
@@ -257,7 +273,6 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
     "",
     "If you want to use AWS S3, comment out S3_ENDPOINT configuration.",
     "You may also comment out AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY when you use IAM role for authorization.",
-    "",
   ], section => {
     section.requiredConfig("S3_ENDPOINT")
       .withDescription(
@@ -310,6 +325,10 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
   file.newSection([
     "General Configuration"
   ], section => {
+    section.requiredConfig("SECRET_KEY_BASE")
+      .withDescription("Secret for encryption required by Rails.")
+      .withValue(config.setaria.secretKeyBase)
+
     section.requiredConfig("API_SECRET").withValue(config.setaria.apiSecret)
       .withDescription("Random string to authenticate API access from sideci.")
   
@@ -344,16 +363,14 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
     "",
     "Database configuration of setaria is given through this environment variable.",
     "Sider supports MySQL 5.7 and assumes `mysql2` driver.",
-    "It will look like `mysql2://sider:topsecret@mysql:3306/setaria?charset=utf8mb4`.",
+    "It will look like `mysql2://sider:topsecret@mysql:3306/setaria`.",
     "",
     "* The username and password must be given if your server requires authentication.",
     "* You can choose arbitrary database name but the database should be dedicated for sideci.",
-    "* The charset parameter must be `utf8mb4`.",
     "",
-    "Read the Rails documentation for the detail.",
+    "Read the database configuration guide for the detail.",
     "",
-    "* https://guides.rubyonrails.org/configuring.html#configuring-a-database",
-    "",
+    "* https://help.sider.review/onprem/database",
   ], section => {
     section.requiredConfig("DATABASE_URL")
       .withDescription("URL to connect database.")
@@ -370,7 +387,6 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
     "Read the IANA documentation for the detail.",
     "",
     "* http://www.iana.org/assignments/uri-schemes/prov/redis",
-    ""
   ], section => {
     section.requiredConfig("REDIS_URL")
       .withDescription("URL to connect Redis.")
