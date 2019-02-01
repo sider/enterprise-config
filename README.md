@@ -38,18 +38,61 @@ Required configurations are marked as `[REQUIRED]`.
 
 ### Setup Database
 
+Start MySQL and run the database setup commands.
+
 ```
 $ docker-compose up -d mysql
 $ docker-compose run sideci_web bundle exec rake db:setup db:seed_fu
 $ docker-compose run catpost_web bundle exec rake db:setup
 $ docker-compose run setaria_web bundle exec rake db:setup
+$ docker-compose kill
+```
+
+### Start Sider Enterprise
+
+```
+$ docker-compose up
+```
+
+And everything will work. 🎉
+
+### Webhook Note
+
+If your GitHub Enterprise can access to your Sider Enterprise, everything will go fine.
+However, if not, webhook cannot be sent to Sider Enterprise.
+When you specify something like `http://localhost:3000`, your GitHub Enterprise cannot send webhooks.
+
+Instead of receiving webhook to start event handler, you can simulate receiving webhooks with the following command.
+This is usually required at the following points:
+
+* When you are adding new organization
+* When you open new pull request
+
+When you try to add a new organization, you will be waiting on Sider after GitHub app installation step.
+Run the following command to continue, and go to Sider dashboard.
+Then you will see the organization you have installed Sider on.
+
+```
+# Simulate GitHub app installation
+$ docker-compose run sideci_web bundle exec rails runner bin/simulate_github_app_installation
+```
+
+When you open new pull request or push a new commit to existing pull request, Sider automatically detects it and start analysis.
+Run the following command to start analysis.
+
+```
+# Detect new commit on a pull request and run analysis
+$ docker-compose run sideci_web bundle exec rails runner bin/simulate_pull_request_sync [org]/[repo] [pull-request-number]
 ```
 
 ## Configuration Generator
 
-You can scaffold the config files for Sider Enterprise.
+You can scaffold the config files, four `.env` files, for Sider Enterprise.
 
 ```
 $ bin/build
-$ bin/generate
+$ bin/generate .
 ```
+
+Edit the generated files.
+Required configurations are marked as `[REQUIRED]`.
