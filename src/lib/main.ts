@@ -78,7 +78,8 @@ async function main() {
 
   const { email, sideci, catpost, setaria } = generate(config)
   
-  const dir = path.join(process.cwd(), argv._[0] || ".")
+  const dirname = argv._[0]
+  const dir = path.isAbsolute(dirname) ? dirname :  path.join(process.cwd(), dirname)
   
   if (!fs.existsSync(dir)) {
     console.info(`Making dir: ${dir}...`)
