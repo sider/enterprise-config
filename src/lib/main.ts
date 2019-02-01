@@ -12,7 +12,7 @@ const args = yargs.usage("Usage: $0 [options] <destination>")
   .describe("redis", "Redis host (example: host:port)")
   .describe("catpost", "catpost endpoint (example: catpost.local)")
   .describe("setaria", "setaria endpoint (example: setaria.local)")
-  .describe("minio", "Minio configuration (example: endpoint:key-id:secret-access-key:region:bucket")
+  .describe("minio", "Minio configuration (example: endpoint%key-id%secret-access-key%region%bucket")
   .demandCommand(1)
 
 const argv = args.argv
@@ -56,9 +56,9 @@ async function main() {
     }
   }
   if (argv.minio) {
-    const components = (argv.minio as string).split(":")
+    const components = (argv.minio as string).split("%")
     if (components.length != 5) {
-      console.error("--minio should be colon separated 5 items of string.")
+      console.error("--minio should be percent (%) separated 5 items of string.")
       return
     }
     config = {
