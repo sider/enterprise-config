@@ -1,0 +1,80 @@
+version: "3"
+
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  redis:
+    image: redis
+    networks:
+      - sider
+      - default
+
+  minio:
+    image: minio/minio
+    command: server /data
+    environment:
+      MINIO_ACCESS_KEY: access_key
+      MINIO_SECRET_KEY: secret_key
+    volumes:
+      - minio_data:/data
+
+  sideci_web:
+    image: quay.io/actcat/sideci
+    ports:
+      - "3000:3000"
+    command: bundle exec puma
+    env_file:
+      - quickstart/email.env
+      - quickstart/sideci.env
+
+  sideci_worker:
+    image: quay.io/actcat/sideci
+    command: bundle exec sidekiq -C ./config/sidekiq.yml
+    env_file:
+      - quickstart/email.env
+      - quickstart/sideci.env
+
+  catpost_web:
+    image: quay.io/actcat/catpost
+    command: bundle exec puma
+    env_file:
+      - quickstart/email.env
+      - quickstart/catpost.env
+
+  catpost_worker:
+    image: quay.io/actcat/catpost
+    command: bundle exec rake environment resque:work
+    env_file:
+      - quickstart/email.env
+      - quickstart/catpost.env
+
+  setaria_web:
+    image: setaria:local
+    env_file:
+      - quickstart/email.env
+      - quickstart/setaria.env
+    command: bundle exec puma
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  setaria_worker:
+    image: setaria:local
+    command: bundle exec rake environment resque:work
+    env_file:
+      - quickstart/email.env
+      - quickstart/setaria.env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+networks:
+  sider:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  minio_data:
