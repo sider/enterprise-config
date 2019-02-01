@@ -143,7 +143,11 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
     section.requiredConfig("GITHUB_APP_NAME")
       .withDescription("Application name of the GitHub App.")
     section.requiredConfig("GITHUB_APP_PRIVATE_KEY")
-      .withDescription("Base64 encoded private key of the GitHub App.")
+      .withDescription(
+        "Base64 encoded private key of the GitHub App.",
+        "Generate and download the key from GitHub Enterprise and use `base64` command like:",
+        "  $ base64 downloaded-private-key.pem"
+       )
     section.requiredConfig("GITHUB_APP_OAUTH2_CLIENT_ID")
       .withDescription("Client ID of the GitHub App.")
     section.requiredConfig("GITHUB_APP_OAUTH2_CLIENT_SECRET")
