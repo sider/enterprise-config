@@ -1,0 +1,49 @@
+#!/bin/sh
+
+set -e
+
+if [ -z $1 ]; then
+	echo "Specify URL to access Sider (example: http://localhost:3000)"
+	exit
+fi
+
+docker run --rm -v `pwd`:`pwd` sider-enterprise-config:dev \
+	--baseurl=$1 \
+	--mysql=root:password@mysql \
+	--redis=redis \
+	--catpost=http://catpost_web:3000 \
+	--setaria=http://setaria_web:3000 \
+	--minio=http://minio:9000%access_key%secret_key%sider%sider \
+	`pwd`/quickstart
+
+echo
+echo "Configuration generated in `pwd`/quickstart. 🎉"
+echo "The next step is to register applications to your GitHub Enterprise."
+echo "Read the following instruction."
+
+echo 
+echo "Access GitHub Enterprise and register two applications; an OAuth App and a GitHub App."
+echo
+
+echo "OAuth App configuration:"
+echo "  Homepage URL:               ${1}"
+echo "  Authorization callback URL: ${1}/users/auth/github"
+echo
+
+echo "GitHub App configuration:"
+echo "  Homepage URL:                    ${1}"
+echo "  User authorization callback URL: ${1}/users/auth/github_app_oauth2/callback"
+echo "  Setup URL:                       ${1}/gh/setup"
+echo "  Webhook URL:                     ${1}/webhooks/github"
+echo "  Permissions:"
+echo "    - Repository contents: Read-only"
+echo "    - Repository metadata: Read-only"
+echo "    - Pull requests:       Read & Write"
+echo "    - Commit statuses:     Read & Write"
+echo "  Subscribe to events:"
+echo "    - Member"
+echo "    - Organization"
+echo "    - Pull request"
+echo "    - Pull request review comment"
+echo "    - Repository"
+echo 
