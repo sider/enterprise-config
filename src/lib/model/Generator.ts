@@ -141,7 +141,11 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
     section.requiredConfig("GITHUB_APP_ID")
       .withDescription("Application ID of the GitHub App.")
     section.requiredConfig("GITHUB_APP_NAME")
-      .withDescription("Application name of the GitHub App.")
+      .withDescription(
+        "Application name of the GitHub App.",
+        "You can find the name in the `Public link` of the GitHub App.",
+        "When the `Public link` is `https://github.example.com/apps/sider-enterprise`, the name is `sider-enterprise`."
+      )
     section.requiredConfig("GITHUB_APP_PRIVATE_KEY")
       .withDescription(
         "Base64 encoded private key of the GitHub App.",
