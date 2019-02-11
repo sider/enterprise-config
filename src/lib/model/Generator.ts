@@ -169,17 +169,21 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
     "You can optionally setup Loggly and Bugsnag integration.",
   ], section => {
     section.requiredConfig("PUSHER_API_ID")
-      .withDescription("Pusher API Configuration.")
+      .withDescription("Pusher API configuration.")
     section.requiredConfig("PUSHER_API_KEY")
-      .withDescription("Pusher API Configuration.")
+      .withDescription("Pusher API configuration.")
     section.requiredConfig("PUSHER_API_SECRET")
-      .withDescription("Pusher API Configuration.")
+      .withDescription("Pusher API configuration.")
     section.requiredConfig("PUSHER_CLUSTER")
-      .withDescription("Pusher API Configuration.")
+      .withDescription("Pusher API configuration.")
     section.optionalConfig("LOGGLY_URL")
       .withDescription("Loggly URL for debugging.")
     section.optionalConfig("BUGSNAG_API_KEY")
-      .withDescription("Bugsnag API Key.")
+      .withDescription("Bugsnag API key.")
+    section.optionalConfig("BUGSNAG_ENDPOINT")
+      .withDescription("Bugsnag On-Premises endpoint.")
+    section.optionalConfig("BUGSNAG_SESSION_ENDPOINT")
+      .withDescription("Bugsnag On-Premises session endpoint.")
   })
   
   return file
@@ -387,7 +391,11 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
     section.optionalConfig("LOGGLY_URL")
       .withDescription("Loggly URL for debugging.")
     section.optionalConfig("BUGSNAG_API_KEY")
-      .withDescription("Bugsnag API Key.")
+      .withDescription("Bugsnag API key.")
+    section.optionalConfig("BUGSNAG_ENDPOINT")
+      .withDescription("Bugsnag On-Premises endpoint.")
+    section.optionalConfig("BUGSNAG_SESSION_ENDPOINT")
+      .withDescription("Bugsnag On-Premises session endpoint.")
   })
   
   return file
@@ -497,7 +505,11 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
     section.optionalConfig("LOGGLY_URL")
       .withDescription("Loggly URL for debugging.")
     section.optionalConfig("BUGSNAG_API_KEY")
-      .withDescription("Bugsnag API Key.")
+      .withDescription("Bugsnag API key.")
+    section.optionalConfig("BUGSNAG_ENDPOINT")
+      .withDescription("Bugsnag On-Premises endpoint.")
+    section.optionalConfig("BUGSNAG_SESSION_ENDPOINT")
+      .withDescription("Bugsnag On-Premises session endpoint.")
   })
   
   return file
