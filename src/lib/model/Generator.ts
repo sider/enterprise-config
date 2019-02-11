@@ -515,7 +515,7 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
   return file
 }
 
-interface ConfigSet {
+export interface ConfigSet {
   email: ConfigFile,
   sideci: ConfigFile,
   catpost: ConfigFile,
