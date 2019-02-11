@@ -3,6 +3,7 @@ export class Config {
   key: string
   value: string
   optional: boolean
+  example: string | undefined
   
   constructor(description: string[], key: string, value: string, optional: boolean) {
     this.description = description
@@ -11,8 +12,9 @@ export class Config {
     this.optional = optional
   }
 
-  continue(k: (option: Config) => void): void {
+  continue(k: (option: Config) => void): Config {
     k(this)
+    return this
   }
   
   withValue(value: string): Config {
@@ -22,6 +24,11 @@ export class Config {
   
   withDescription(...description: string[]): Config {
     this.description = description
+    return this
+  }
+
+  withExample(example: string | undefined): Config {
+    this.example = example
     return this
   }
 }

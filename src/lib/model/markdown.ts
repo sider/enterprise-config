@@ -26,6 +26,12 @@ function configToMarkdown(lines: string[], config: ConfigFile): void {
       })
 
       lines.push("")
+
+      if (config.example) {
+        lines.push("#### Example")
+        lines.push(`    ${config.key}=${config.example}`)
+        lines.push("")
+      }
     })
 
     lines.push("")

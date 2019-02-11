@@ -20,11 +20,14 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
           option.withValue(config.endpoint)
         }
       })
+      .withExample("https://sider.example.com")
     section.requiredConfig("DOCS_PAGE_URL")
       .withDescription("URL which points to document page.")
       .withValue("https://help.sider.review")
+      .withExample("https://help.sider.review")
     section.requiredConfig("EXCEPTION_NOTIFIER_RECIPIENT_EMAILS")
       .withDescription("Comma-separated list of recipients for error reporting emails.")
+      .withExample("foo@example.com,bar@example.com")
     section.requiredConfig("GITHUB_OAUTH_HEAD_ENCRYPTION_KEY").withValue(config.sideci.githubTokenEncryptionKey)
       .withDescription(
         "Random string to encrypt GitHub credential.",
@@ -33,6 +36,7 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
     section.requiredConfig("STATUS_PAGE_URL")
       .withDescription("URL to share service status.")
       .withValue("https://status.sider.review")
+      .withExample("https://status.sider.review")
     section.requiredConfig("SECRET_KEY_BASE")
       .withDescription("Secret for encryption required by Rails.")
       .withValue(config.sideci.secretKeyBase)
@@ -42,6 +46,7 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
         "You cannot change the value from `onprem`."
       )
       .withValue("onprem")
+      .withExample("onprem")
   })
   
   file.newSection([
@@ -65,6 +70,8 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
           option.withValue(databaseURL(config.mysqlHost, "sideci"))
         }
       })
+      .withExample("onprem")
+      .withExample("mysql2://sider:topsecret@mysql:3306/sideci")
   })
   
   file.newSection([
@@ -86,6 +93,7 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
           option.withValue(redisURL(config.redisHost, 0))
         }
       })
+      .withExample("redis://redis:7372/0")
   })
   
   file.newSection(["Catpost Configuration"], section => {
@@ -96,6 +104,7 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
           option.withValue(config.catpost.endpoint)
         }
       })
+      .withExample("https://catpost.example.com:3000")
     section.requiredConfig("CATPOST_SECRET")
       .withDescription("Random string used to authorize requests to catpost.")
       .withValue(config.catpost.apiSecret)
@@ -109,6 +118,7 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
           option.withValue(config.setaria.endpoint)
         }
       })
+      .withExample("https://setaria.example.com:3000")
     section.requiredConfig("SETARIA_SECRET")
       .withDescription("Random string used to authorize requests to setaria.")
       .withValue(config.setaria.apiSecret)
@@ -127,11 +137,13 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
         "URL which points to GitHub Enterprise web page.",
         "Example: https://github.example.com"
        )
+      .withExample("https://github.example.com")
     section.requiredConfig("GITHUB_API_ENDPOINT")
       .withDescription(
         "URL which points to GitHub Enterprise API endpoint.",
         "Example: https://github.example.com/api/v3/"
       )
+      .withExample("https://github.example.com/api/v3")
 
     section.requiredConfig("GITHUB_CLIENT_ID")
       .withDescription("Client ID of the OAuth App.")
@@ -146,6 +158,7 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
         "You can find the name in the `Public link` of the GitHub App.",
         "When the `Public link` is `https://github.example.com/apps/sider-enterprise`, the name is `sider-enterprise`."
       )
+      .withExample("sider-enterprise")
     section.requiredConfig("GITHUB_APP_PRIVATE_KEY")
       .withDescription(
         "Base64 encoded private key of the GitHub App.",
@@ -205,8 +218,10 @@ function generateEmailConfig(config: Configuration): ConfigFile {
   ], section => {
     section.requiredConfig("ACTION_MAILER_SMTP_ADDRESS")
       .withDescription("SMTP server address.")
+      .withExample("smtp.example.com")
     section.requiredConfig("ACTION_MAILER_DEFAULT_FROM_EMAIL")
       .withDescription("From address of emails sent from Sider.")
+      .withExample("sider@example.com")
     
     section.optionalConfig("ACTION_MAILER_SMTP_PORT")
       .withDescription("SMTP server port number.")
@@ -222,6 +237,7 @@ function generateEmailConfig(config: Configuration): ConfigFile {
     section.optionalConfig("ACTION_MAILER_SMTP_DOMAIN")
       .withDescription("Domain name for HELO command.")
     section.optionalConfig("ACTION_MAILER_SMTP_ENABLE_STARTSSL_AUTO").withValue("no")
+      .withExample("no")
   })
   
   return file
@@ -241,25 +257,30 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
     section.requiredConfig("GIT_REPOS_DIR")
       .withDescription("Path to put git repository cache.")
       .withValue("/repos")
+      .withExample("/repos")
   
     section.requiredConfig("EXCEPTION_NOTIFIER_RECIPIENT_EMAILS")
       .withDescription("Comma-separated list of recipients for error reporting emails.")
+      .withExample("foo@example.com,bar@example.com")
   
     section.requiredConfig("RAILS_ENV").withValue("onprem")
       .withDescription(
         "The *environment* for Rails framework.",
         "You cannot change the value from `onprem`."
       )
+      .withExample("onprem")
     section.requiredConfig("TERM_CHILD").withValue("1")
       .withDescription(
         "An option for Resque.",
         "You cannot change the value."
       )
+      .withExample("1")
     section.requiredConfig("QUEUE").withValue("*")
       .withDescription(
         "An option for Resque.",
         "You cannot change the value."
       )
+      .withExample("*")
   })
   
   file.newSection([
@@ -283,6 +304,7 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
           option.withValue(databaseURL(config.mysqlHost, "catpost"))
         }
       })
+      .withExample("mysql2://sider:topsecret@mysql:3306/catpost")
   })
   
   file.newSection([
@@ -304,6 +326,7 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
           option.withValue(redisURL(config.redisHost, 1))
         }
       })
+      .withExample("redis://redis:7372/1")
   })
   
   file.newSection([
@@ -339,6 +362,7 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
           option.withValue(config.catpost.minio.endpoint)
         }
       })
+      .withExample("http://minio:9000")
     section.requiredConfig("S3_BUCKET_NAME")
       .withDescription(
         "Object storage bucket name.",
@@ -350,6 +374,7 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
           option.withValue(config.catpost.minio.bucketName)
         }
       })
+      .withExample("sider-example")
     section.requiredConfig("S3_REGION_NAME")
       .withDescription(
         "Object storage region name.",
@@ -361,6 +386,7 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
           option.withValue(config.catpost.minio.regionName)
         }
       })
+      .withExample("us-east-1")
     section.requiredConfig("AWS_ACCESS_KEY_ID")
       .withDescription(
         "Authorization for object storage.",
@@ -428,16 +454,19 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
         "The *environment* for Rails framework.",
         "You cannot change the value from `onprem`."
       )
+      .withExample("onprem")
     section.requiredConfig("TERM_CHILD").withValue("1")
       .withDescription(
         "An option for Resque.",
         "You cannot change the value."
       )
+      .withExample("1")
     section.requiredConfig("QUEUE").withValue("*")
       .withDescription(
         "An option for Resque.",
         "You cannot change the value."
       )
+      .withExample("*")
   })
   
   file.newSection([
@@ -461,7 +490,7 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
           option.withValue(databaseURL(config.mysqlHost, "setaria"))
         }
       })
-
+      .withExample("mysql2://sider:topsecret@mysql:3306/setaria")
   })
   
   file.newSection([
@@ -483,6 +512,7 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
           option.withValue(redisURL(config.redisHost, 2))
         }
       })
+      .withExample("redis://redis:7372/2")
   })
   
   file.newSection([
@@ -493,6 +523,7 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
   ], section => {
     section.requiredConfig("QUAY_ROBOT_NAME")
       .withDescription("Quay account name.")
+      .withExample("actcat+example")
     section.requiredConfig("QUAY_ROBOT_PASSWORD")
       .withDescription("Quay account password.")
   })
