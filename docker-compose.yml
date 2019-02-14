@@ -24,7 +24,7 @@ services:
       - minio_data:/data
 
   sideci_web:
-    image: quay.io/actcat/sideci
+    image: quay.io/actcat/sideci:201902.0
     ports:
       - "3000:3000"
     command: bundle exec puma
@@ -33,28 +33,28 @@ services:
       - quickstart/sideci.env
 
   sideci_worker:
-    image: quay.io/actcat/sideci
+    image: quay.io/actcat/sideci:201902.0
     command: bundle exec sidekiq -C ./config/sidekiq.yml
     env_file:
       - quickstart/email.env
       - quickstart/sideci.env
 
   catpost_web:
-    image: quay.io/actcat/catpost
+    image: quay.io/actcat/catpost:201902.1
     command: bundle exec puma
     env_file:
       - quickstart/email.env
       - quickstart/catpost.env
 
   catpost_worker:
-    image: quay.io/actcat/catpost
+    image: quay.io/actcat/catpost:201902.1
     command: bundle exec rake environment resque:work
     env_file:
       - quickstart/email.env
       - quickstart/catpost.env
 
   setaria_web:
-    image: setaria:local
+    image: quay.io/actcat/setaria:201902.0
     env_file:
       - quickstart/email.env
       - quickstart/setaria.env
@@ -63,7 +63,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
   setaria_worker:
-    image: setaria:local
+    image: quay.io/actcat/setaria:201902.0
     command: bundle exec rake environment resque:work
     env_file:
       - quickstart/email.env
