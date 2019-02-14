@@ -47,6 +47,14 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
       )
       .withValue("onprem")
       .withExample("onprem")
+    section.optionalConfig("RESTRICT_SIGN_UP")
+      .withDescription(
+        "Set `true` to this to disable _self sign up_ to Sider.",
+        "If self sign up is disabled, administrator should register each user account."
+      )
+      .withSupportIntroduced("201902")
+      .withExample("true")
+      .withValue("true")
   })
   
   file.newSection([
@@ -471,6 +479,13 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
         "You cannot change the value."
       )
       .withExample("*")
+    section.optionalConfig("RUNNER_USE_DEFAULT_NETWORK")
+      .withDescription(
+        "Specify any value if you want to run the analyzers in `default` network of Docker."
+      )
+      .withSupportIntroduced("201902")
+      .withExample("1")
+      .withValue("1")
   })
   
   file.newSection([
