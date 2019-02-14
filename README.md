@@ -74,7 +74,7 @@ Then you will see the organization you have installed Sider on.
 
 ```
 # Simulate GitHub app installation
-$ docker-compose run sideci_web bundle exec rails runner bin/simulate_github_app_installation
+$ docker-compose run sideci_worker bundle exec rake github_app:sync
 ```
 
 When you open new pull request or push a new commit to existing pull request, Sider automatically detects it and start analysis.
@@ -82,7 +82,8 @@ Run the following command to start analysis.
 
 ```
 # Detect new commit on a pull request and run analysis
-$ docker-compose run sideci_web bundle exec rails runner bin/simulate_pull_request_sync [org]/[repo] [pull-request-number]
+# Assume the repository is acme/server, and the number of the pull request is 123
+$ docker-compose run sideci_worker bundle exec rake 'pull_request:sync[acme/server,123]'
 ```
 
 ## Configuration Generator
