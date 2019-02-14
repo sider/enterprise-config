@@ -17,9 +17,19 @@ function configToMarkdown(lines: string[], config: ConfigFile): void {
     section.configs.forEach(config => {
       const cells: string[] = []
 
-      lines.push(`### \`${config.key}\` (${config.optional ? "Optional" : "Required"})`)
+      lines.push(`### \`${config.key}\` ${config.optional ? "(Optional)" : ""}`)
 
       lines.push("")
+
+      if (config.support) {
+        const since = (config.support as any).introduced
+        const until = (config.support as any).deprecated
+
+        lines.push("|Introduced|Deprecated|")
+        lines.push("|----------|----------|")
+        lines.push(`|${since || "-"}|${until || "-"}|`)
+        lines.push("")
+      }
 
       config.description.forEach(line => {
         lines.push(line)

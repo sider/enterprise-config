@@ -1,9 +1,14 @@
+export type SupportedVersion = { readonly introduced: string, readonly deprecated: string }
+                             | { readonly introduced: string }
+                             | { readonly deprecated: string }
+
 export class Config {
   description: string[]
   key: string
   value: string
   optional: boolean
   example: string | undefined
+  support: SupportedVersion | undefined
   
   constructor(description: string[], key: string, value: string, optional: boolean) {
     this.description = description
@@ -30,6 +35,15 @@ export class Config {
   withExample(example: string | undefined): Config {
     this.example = example
     return this
+  }
+
+  withSupport(support: SupportedVersion | undefined): Config {
+    this.support = support
+    return this
+  }
+
+  withSupportIntroduced(introduced: string): Config {
+    return this.withSupport({ introduced: introduced })
   }
 }
 

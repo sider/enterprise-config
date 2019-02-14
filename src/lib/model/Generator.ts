@@ -195,8 +195,10 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
       .withDescription("Bugsnag API key.")
     section.optionalConfig("BUGSNAG_ENDPOINT")
       .withDescription("Bugsnag On-Premises endpoint.")
+      .withSupportIntroduced("201902")
     section.optionalConfig("BUGSNAG_SESSION_ENDPOINT")
       .withDescription("Bugsnag On-Premises session endpoint.")
+      .withSupportIntroduced("201902")
   })
   
   return file
@@ -420,8 +422,10 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
       .withDescription("Bugsnag API key.")
     section.optionalConfig("BUGSNAG_ENDPOINT")
       .withDescription("Bugsnag On-Premises endpoint.")
+      .withSupportIntroduced("201902")
     section.optionalConfig("BUGSNAG_SESSION_ENDPOINT")
       .withDescription("Bugsnag On-Premises session endpoint.")
+      .withSupportIntroduced("201902")
   })
   
   return file
@@ -539,8 +543,10 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
       .withDescription("Bugsnag API key.")
     section.optionalConfig("BUGSNAG_ENDPOINT")
       .withDescription("Bugsnag On-Premises endpoint.")
+      .withSupportIntroduced("201902")
     section.optionalConfig("BUGSNAG_SESSION_ENDPOINT")
       .withDescription("Bugsnag On-Premises session endpoint.")
+      .withSupportIntroduced("201902")
   })
   
   return file
