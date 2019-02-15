@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+DIR=$1
+
+if [ -z $1 ]; then
+	DIR=.
+fi
+
+if [ ! ${DIR:0:1} = "/" ]; then
+	DIR=`pwd`/${DIR}
+fi
+
+docker run --rm -v $DIR:$DIR sider-enterprise-config:dev \
+	$DIR
+
+echo
+echo "Configuration generated in `pwd`. 🎉"
+echo "Edit the configuration files to set up Sider Enterprise."
+echo "The required fields are marked as [REQUIRED]."
