@@ -77,8 +77,8 @@ Then you will see the organization you have installed Sider on.
 $ docker-compose run sideci_worker bundle exec rake github_app:sync
 ```
 
-When you open new pull request or push a new commit to existing pull request, Sider automatically detects it and start analysis.
-Run the following command to start analysis.
+When you open new pull request or push a new commit to existing pull request, Sider will receive a webhook and automatically start an analysis.
+Run the following command to let Sider know it and start an analysis.
 
 ```
 # Detect new commit on a pull request and run analysis
