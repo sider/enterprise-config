@@ -86,6 +86,18 @@ Run the following command to start analysis.
 $ docker-compose run sideci_worker bundle exec rake 'pull_request:sync[acme/server,123]'
 ```
 
+### Admin Note
+
+Sider Enterprise provides an admin console at `/admin`.
+To allow a Sider Enterprise account to access the console, you have to promote the account to an admin.
+
+```
+# Make an account with `sider-admin` GitHub login name an admin.
+$ docker-compose run sideci_worker bundle exec rake 'admin:promote[sider-admin]'
+```
+
+You can also promote an account to admin from the admin console, but you have to promote the first admin from the command line.
+
 ## Configuration Generator
 
 You can scaffold the config files, four `.env` files, for Sider Enterprise.
