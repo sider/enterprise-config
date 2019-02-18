@@ -13,6 +13,21 @@ We provide the following tools to help Sider Enterprise setup.
 
 ## Quickstart
 
+### Setup authentication
+
+Use `docker login` command to authorize your account.
+Sider team sends you the account and password to get authenticated to `quay.io`.
+
+````
+$ docker login -u=$account -p=$password quay.io
+````
+
+### Pusher Account
+
+Sign up to Pusher to set up Sider Enterprise. You may also required to configure your network to allow the access from sideci to Pusher.
+
+We assume free plan is more than enough for Sider Enterprise, but you may need to upgrade to paid plan depending on the number of the developers.
+
 ### Generate the configuration
 
 Build the Docker image and generate a configuration.
