@@ -89,7 +89,7 @@ Then you will see the organization you have installed Sider on.
 
 ```
 # Simulate GitHub app installation
-$ docker-compose run sideci_worker bundle exec rake github_app:sync
+$ docker-compose run sideci_web bundle exec rake github_app:sync
 ```
 
 When you open new pull request or push a new commit to existing pull request, Sider will receive a webhook and automatically start an analysis.
@@ -98,7 +98,7 @@ Run the following command to let Sider know it and start an analysis.
 ```
 # Detect new commit on a pull request and run analysis
 # Assume the repository is acme/server, and the number of the pull request is 123
-$ docker-compose run sideci_worker bundle exec rake 'pull_request:sync[acme/server,123]'
+$ docker-compose run sideci_web bundle exec rake 'pull_request:sync[acme/server,123]'
 ```
 
 ### Admin Note
@@ -108,7 +108,7 @@ To allow a Sider Enterprise account to access the console, you have to promote t
 
 ```
 # Make an account with `sider-admin` GitHub login name an admin.
-$ docker-compose run sideci_worker bundle exec rake 'admin:promote[sider-admin]'
+$ docker-compose run sideci_web bundle exec rake 'admin:promote[sider-admin]'
 ```
 
 You can also promote an account to admin from the admin console, but you have to promote the first admin from the command line.
