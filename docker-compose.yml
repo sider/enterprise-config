@@ -24,7 +24,7 @@ services:
       - minio_data:/data
 
   sideci_web:
-    image: quay.io/actcat/sideci:201902.0
+    image: quay.io/actcat/sideci:201902.1
     ports:
       - "3000:3000"
     command: bundle exec puma
@@ -33,7 +33,7 @@ services:
       - quickstart/sideci.env
 
   sideci_worker:
-    image: quay.io/actcat/sideci:201902.0
+    image: quay.io/actcat/sideci:201902.1
     command: bundle exec sidekiq -C ./config/sidekiq.yml
     env_file:
       - quickstart/email.env
