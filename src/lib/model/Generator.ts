@@ -21,10 +21,6 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
         }
       })
       .withExample("https://sider.example.com")
-    section.requiredConfig("DOCS_PAGE_URL")
-      .withDescription("URL which points to document page.")
-      .withValue("https://help.sider.review")
-      .withExample("https://help.sider.review")
     section.requiredConfig("EXCEPTION_NOTIFIER_RECIPIENT_EMAILS")
       .withDescription("Comma-separated list of recipients for error reporting emails.")
       .withExample("foo@example.com,bar@example.com")
@@ -33,10 +29,6 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
         "Random string to encrypt GitHub credential.",
         "Note that changing this value will make all organizations invalid."
       )
-    section.requiredConfig("STATUS_PAGE_URL")
-      .withDescription("URL to share service status.")
-      .withValue("https://status.sider.review")
-      .withExample("https://status.sider.review")
     section.requiredConfig("SECRET_KEY_BASE")
       .withDescription("Secret for encryption required by Rails.")
       .withValue(config.sideci.secretKeyBase)
@@ -67,7 +59,7 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
     "* The username and password must be given if your server requires authentication.",
     "* You can choose arbitrary database name but the database should be dedicated for sideci.",
     "",
-    "Read the database configuration guide for the detail.",
+    "Read the database configuration guide for the details.",
     "",
     "* https://help.sider.review/onprem/database",
   ], section => {
@@ -90,7 +82,7 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
     "",
     "* You should specify path (0 in the example above) which is dedicated to sideci.",
     "",
-    "Read the IANA documentation for the detail.",
+    "Read the IANA documentation for the details.",
     "",
     "* http://www.iana.org/assignments/uri-schemes/prov/redis",
   ], section => {
@@ -218,7 +210,7 @@ function generateEmailConfig(config: Configuration): ConfigFile {
   file.newSection([
     "SMTP Configuration to send email from Sider",
     "",
-    "You can see the detail of the configuration at Sider GitHub page and Ruby net/http library document.",
+    "You can see the detail of the configuration at Sider GitHub page and Ruby net/http library documents.",
     "",
     "* https://github.com/sider/configure",
     "* https://docs.ruby-lang.org/en/trunk/Net/SMTP.html",
@@ -303,7 +295,7 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
     "* The username and password must be given if your server requires authentication.",
     "* You can choose arbitrary database name but the database should be dedicated for catpost.",
     "",
-    "Read the database configuration guide for the detail.",
+    "Read the database configuration guide for the details.",
     "",
     "* https://help.sider.review/onprem/database",
   ], section => {
@@ -325,7 +317,7 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
     "",
     "* You should specify path (1 in the example above) which is dedicated to catpost.",
     "",
-    "Read the IANA documentation for the detail.",
+    "Read the IANA documentation for the details.",
     "",
     "* http://www.iana.org/assignments/uri-schemes/prov/redis",
   ], section => {
@@ -498,7 +490,7 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
     "* The username and password must be given if your server requires authentication.",
     "* You can choose arbitrary database name but the database should be dedicated for sideci.",
     "",
-    "Read the database configuration guide for the detail.",
+    "Read the database configuration guide for the details.",
     "",
     "* https://help.sider.review/onprem/database",
   ], section => {
@@ -520,7 +512,7 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
     "",
     "* You should specify path (2 in the example above) which is dedicated to setaria.",
     "",
-    "Read the IANA documentation for the detail.",
+    "Read the IANA documentation for the details.",
     "",
     "* http://www.iana.org/assignments/uri-schemes/prov/redis",
   ], section => {
