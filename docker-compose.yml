@@ -53,6 +53,13 @@ services:
       - quickstart/email.env
       - quickstart/catpost.env
 
+  catpost_scheduler:
+    image: quay.io/actcat/catpost:release-201902.1
+    command: bundle exec rake environment resque:scheduler
+    env_file:
+      - quickstart/email.env
+      - quickstart/catpost.env
+
   setaria_web:
     image: quay.io/actcat/setaria:release-201902.0
     env_file:
