@@ -47,6 +47,18 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
       .withSupportIntroduced("201902")
       .withExample("true")
       .withValue("true")
+     section.optionalConfig("SIDECI_TIMEZONE")
+      .withDescription(
+        "Set the timezone used for admin console.",
+        "This does not affect the time formats for Sider Enterprise end users.",
+        "It depends on `ActiveSupport::TimeZone` class.",
+        "See the reference manual for available options.",
+        "",
+        "- https://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html"
+      )
+      .withSupportIntroduced("201903")
+      .withExample("Asia/Tokyo")
+      .withValue("Asia/Tokyo")
   })
   
   file.newSection([
