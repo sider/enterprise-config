@@ -193,14 +193,22 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
     "",
     "You can optionally setup Loggly and Bugsnag integration.",
   ], section => {
-    section.requiredConfig("PUSHER_API_ID")
+    section.optionalConfig("PUSHER_API_ID")
       .withDescription("Pusher API configuration.")
-    section.requiredConfig("PUSHER_API_KEY")
+    section.optionalConfig("PUSHER_API_KEY")
       .withDescription("Pusher API configuration.")
-    section.requiredConfig("PUSHER_API_SECRET")
+    section.optionalConfig("PUSHER_API_SECRET")
       .withDescription("Pusher API configuration.")
-    section.requiredConfig("PUSHER_CLUSTER")
+    section.optionalConfig("PUSHER_CLUSTER")
       .withDescription("Pusher API configuration.")
+    section.optionalConfig("FRONTEND_POLLING_INTERVAL")
+      .withDescription(
+        "Polling interval in seconds.",
+        "The default value is 10, which means each browser calls Ajax requests every 10 seconds.",
+        "Note this parameter affects Sider only if any of Pusher parameters are not configured.",
+      )
+      .withSupportIntroduced("201904")
+      .withValue("20")
     section.optionalConfig("LOGGLY_URL")
       .withDescription("Loggly URL for debugging.")
     section.optionalConfig("BUGSNAG_API_KEY")
