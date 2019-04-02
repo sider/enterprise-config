@@ -204,7 +204,7 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
     section.optionalConfig("FRONTEND_POLLING_INTERVAL")
       .withDescription(
         "Polling interval in seconds.",
-        "The default value is 10, which means each browser calls Ajax requests every 10 seconds.",
+        "The default value is 30, which means each browser calls Ajax requests every 30 seconds.",
         "Note this parameter affects Sider only if any of Pusher parameters are not configured.",
       )
       .withSupportIntroduced("201904")
