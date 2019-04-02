@@ -184,31 +184,47 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
     section.requiredConfig("GITHUB_APP_WEBHOOK_SECRET")
       .withDescription("Webhook secret of the GitHub App.")
   })
+
+  file.newSection(
+    [
+      "Live Update Configuration",
+      "",
+      "Sider web app can detect events happened in the server and updates its content automatically.",
+      "Users don't have to reload their browser to update their pages.",
+      "We provide two implementations: Pusher and polling.",
+      "Pusher is our recommendation because of its responsiveness, but it requires an access to pusher.com.",
+      "",
+      "If you can use Pusher, sign up to Pusher and set up the PUSHER_* variables.",
+      "",
+      "When you cannot use Pusher, try polling implementation.",
+      "Leave the PUSHER_* variables empty if you use polling.",
+      "",
+      "- https://pusher.com"
+    ],
+    section => {
+      section.optionalConfig("PUSHER_API_ID")
+        .withDescription("Pusher API configuration.")
+      section.optionalConfig("PUSHER_API_KEY")
+        .withDescription("Pusher API configuration.")
+      section.optionalConfig("PUSHER_API_SECRET")
+        .withDescription("Pusher API configuration.")
+      section.optionalConfig("PUSHER_CLUSTER")
+        .withDescription("Pusher API configuration.")
+      section.optionalConfig("FRONTEND_POLLING_INTERVAL")
+        .withDescription(
+          "Polling interval in seconds.",
+          "The default value is 30, which means each browser calls Ajax requests every 30 seconds.",
+        )
+        .withSupportIntroduced("201904")
+        .withValue("20")
+    }
+  )
   
   file.newSection([
     "Integration Configuration",
     "",
-    "Sider uses Pusher to implement a push notification to web browser.",
-    "Put the PUSHER_* values obtained from Pusher web page.",
-    "",
     "You can optionally setup Loggly and Bugsnag integration.",
   ], section => {
-    section.optionalConfig("PUSHER_API_ID")
-      .withDescription("Pusher API configuration.")
-    section.optionalConfig("PUSHER_API_KEY")
-      .withDescription("Pusher API configuration.")
-    section.optionalConfig("PUSHER_API_SECRET")
-      .withDescription("Pusher API configuration.")
-    section.optionalConfig("PUSHER_CLUSTER")
-      .withDescription("Pusher API configuration.")
-    section.optionalConfig("FRONTEND_POLLING_INTERVAL")
-      .withDescription(
-        "Polling interval in seconds.",
-        "The default value is 30, which means each browser calls Ajax requests every 30 seconds.",
-        "Note this parameter affects Sider only if any of Pusher parameters are not configured.",
-      )
-      .withSupportIntroduced("201904")
-      .withValue("20")
     section.optionalConfig("LOGGLY_URL")
       .withDescription("Loggly URL for debugging.")
     section.optionalConfig("BUGSNAG_API_KEY")
