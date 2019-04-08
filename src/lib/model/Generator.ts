@@ -11,7 +11,7 @@ function redisURL(host: string, index: number): string {
 
 function generateSideCIConfig(config: Configuration): ConfigFile {
   const file = new ConfigFile("sideci.env")
-  
+
   file.newSection(["General Configuration"], section => {
     section.requiredConfig("BASE_URL")
       .withDescription("URL to allow end users to access Sider.")
@@ -60,7 +60,7 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
       .withExample("Asia/Tokyo")
       .withValue("Asia/Tokyo")
   })
-  
+
   file.newSection([
     "Database Configuration",
     "",
@@ -85,7 +85,7 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
       .withExample("onprem")
       .withExample("mysql2://sider:topsecret@mysql:3306/sideci")
   })
-  
+
   file.newSection([
     "Redis Configuration",
     "",
@@ -107,7 +107,7 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
       })
       .withExample("redis://redis:7372/0")
   })
-  
+
   file.newSection(["Catpost Configuration"], section => {
     section.requiredConfig("CATPOST_BASE_URL")
       .withDescription("URL which points to catpost endpoint.")
@@ -121,7 +121,7 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
       .withDescription("Random string used to authorize requests to catpost.")
       .withValue(config.catpost.apiSecret)
   })
-  
+
   file.newSection(["Setaria Configuration"], section => {
     section.requiredConfig("SETARIA_BASE_URL")
       .withDescription("URL which points to setaria endpoint.")
@@ -135,7 +135,7 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
       .withDescription("Random string used to authorize requests to setaria.")
       .withValue(config.setaria.apiSecret)
   })
-  
+
   file.newSection([
     "GitHub Enterprise Configuration",
     "",
@@ -189,15 +189,14 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
     [
       "Live Update Configuration",
       "",
-      "Sider web app can detect events happened in the server and updates its content automatically.",
+      "Sider web app can detect events that happened in the server and updates its content automatically.",
       "Users don't have to reload their browser to update their pages.",
-      "We provide two implementations: Pusher and polling.",
-      "Pusher is our recommendation because of its responsiveness, but it requires an access to pusher.com.",
+      "Sider uses two mechanisms to implement this: Pusher and polling.",
       "",
-      "If you can use Pusher, sign up to Pusher and set up the PUSHER_* variables.",
+      "To configure Pusher, sign up to Pusher and set up the `PUSHER_*` variables.",
       "",
-      "When you cannot use Pusher, try polling implementation.",
-      "Leave the PUSHER_* variables empty if you use polling.",
+      "If you leave the `PUSHER_*` variables empty, Pusher will be disabled, and Sider will work only with polling.",
+      "You can configure the polling interval with `FRONTEND_POLLING_INTERVAL`: fine tune the value for both UI responsiveness and the server load.",
       "",
       "- https://pusher.com"
     ],
@@ -219,7 +218,7 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
         .withValue("20")
     }
   )
-  
+
   file.newSection([
     "Integration Configuration",
     "",
@@ -236,13 +235,13 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
       .withDescription("Bugsnag On-Premises session endpoint.")
       .withSupportIntroduced("201902")
   })
-  
+
   return file
 }
 
 function generateEmailConfig(config: Configuration): ConfigFile {
   const file = new ConfigFile("email.env")
-  
+
   file.newSection([
     "SMTP Configuration to send email from Sider",
     "",
@@ -260,7 +259,7 @@ function generateEmailConfig(config: Configuration): ConfigFile {
     section.requiredConfig("ACTION_MAILER_DEFAULT_FROM_EMAIL")
       .withDescription("From address of emails sent from Sider.")
       .withExample("sider@example.com")
-    
+
     section.optionalConfig("ACTION_MAILER_SMTP_PORT")
       .withDescription("SMTP server port number.")
       .withValue("25")
@@ -277,30 +276,30 @@ function generateEmailConfig(config: Configuration): ConfigFile {
     section.optionalConfig("ACTION_MAILER_SMTP_ENABLE_STARTSSL_AUTO").withValue("no")
       .withExample("no")
   })
-  
+
   return file
 }
 
 function generateCatpostConfig(config: Configuration): ConfigFile {
   const file = new ConfigFile("catpost.env")
-  
+
   file.newSection(["General Configuration"], section => {
     section.requiredConfig("SECRET_KEY_BASE")
       .withDescription("Secret for encryption required by Rails.")
       .withValue(config.catpost.secretKeyBase)
-  
+
     section.requiredConfig("API_TOKEN").withValue(config.catpost.apiSecret)
       .withDescription("Random string to authenticate API access.")
-    
+
     section.requiredConfig("GIT_REPOS_DIR")
       .withDescription("Path to put git repository cache.")
       .withValue("/repos")
       .withExample("/repos")
-  
+
     section.requiredConfig("EXCEPTION_NOTIFIER_RECIPIENT_EMAILS")
       .withDescription("Comma-separated list of recipients for error reporting emails.")
       .withExample("foo@example.com,bar@example.com")
-  
+
     section.requiredConfig("RAILS_ENV").withValue("onprem")
       .withDescription(
         "The *environment* for Rails framework.",
@@ -320,7 +319,7 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
       )
       .withExample("*")
   })
-  
+
   file.newSection([
     "Database Configuration",
     "",
@@ -344,7 +343,7 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
       })
       .withExample("mysql2://sider:topsecret@mysql:3306/catpost")
   })
-  
+
   file.newSection([
     "Redis Configuration",
     "",
@@ -366,7 +365,7 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
       })
       .withExample("redis://redis:7372/1")
   })
-  
+
   file.newSection([
     "Encryption Configuration"
   ], section => {
@@ -380,7 +379,7 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
     section.requiredConfig("ARCHIVE_NAME_SECRET").withValue(config.catpost.archiveNameSalt)
       .withDescription("Random string to make archive name more unpredictable.")
   })
-  
+
   file.newSection([
     "Object Storage Configuration",
     "",
@@ -446,7 +445,7 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
         }
       })
   })
-  
+
   file.newSection([
     "Integration Configuration",
     "",
@@ -463,13 +462,13 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
       .withDescription("Bugsnag On-Premises session endpoint.")
       .withSupportIntroduced("201902")
   })
-  
+
   return file
 }
 
 function generateSetariaConfig(config: Configuration): ConfigFile {
   const file = new ConfigFile("setaria.env")
-  
+
   file.newSection([
     "General Configuration"
   ], section => {
@@ -479,16 +478,16 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
 
     section.requiredConfig("API_SECRET").withValue(config.setaria.apiSecret)
       .withDescription("Random string to authenticate API access from sideci.")
-  
+
     section.requiredConfig("SSH_KEY_ENCRYPTION_KEY").withValue(config.setaria.sshSecretKeyEncryptionKey)
       .withDescription(
         "32 bytes of random string to encrypt SSH secret key associated to repositories.",
         "You cannot change this value once you set up."
       )
-    
+
     section.requiredConfig("EXCEPTION_NOTIFIER_RECIPIENT_EMAILS")
       .withDescription("Comma-separated list of recipients for error reporting emails.")
-  
+
     section.requiredConfig("RAILS_ENV").withValue("onprem")
       .withDescription(
         "The *environment* for Rails framework.",
@@ -515,7 +514,7 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
       .withExample("1")
       .withValue("1")
   })
-  
+
   file.newSection([
     "Database Configuration",
     "",
@@ -539,7 +538,7 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
       })
       .withExample("mysql2://sider:topsecret@mysql:3306/setaria")
   })
-  
+
   file.newSection([
     "Redis Configuration",
     "",
@@ -561,7 +560,7 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
       })
       .withExample("redis://redis:7372/2")
   })
-  
+
   file.newSection([
     "Docker Configuration",
     "",
@@ -574,7 +573,7 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
     section.requiredConfig("QUAY_ROBOT_PASSWORD")
       .withDescription("Quay account password.")
   })
-  
+
   file.newSection([
     "Integration Configuration",
     "",
@@ -591,7 +590,7 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
       .withDescription("Bugsnag On-Premises session endpoint.")
       .withSupportIntroduced("201902")
   })
-  
+
   return file
 }
 
@@ -607,6 +606,6 @@ export function generate(config: Configuration): ConfigSet {
   const sideci = generateSideCIConfig(config)
   const catpost = generateCatpostConfig(config)
   const setaria = generateSetariaConfig(config)
-  
+
   return { email, sideci, catpost, setaria }
 }
