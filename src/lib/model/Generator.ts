@@ -24,11 +24,6 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
     section.requiredConfig("EXCEPTION_NOTIFIER_RECIPIENT_EMAILS")
       .withDescription("Comma-separated list of recipients for error reporting emails.")
       .withExample("foo@example.com,bar@example.com")
-    section.requiredConfig("GITHUB_OAUTH_HEAD_ENCRYPTION_KEY").withValue(config.sideci.githubTokenEncryptionKey)
-      .withDescription(
-        "Random string to encrypt GitHub credential.",
-        "Note that changing this value will make all organizations invalid."
-      )
     section.requiredConfig("SECRET_KEY_BASE")
       .withDescription("Secret for encryption required by Rails.")
       .withValue(config.sideci.secretKeyBase)
@@ -59,6 +54,22 @@ function generateSideCIConfig(config: Configuration): ConfigFile {
       .withSupportIntroduced("201903")
       .withExample("Asia/Tokyo")
       .withValue("Asia/Tokyo")
+    section.requiredConfig("ENCRYPTION_SERVICE_KEY")
+      .withDescription(
+        "Random string to encrypt secret data.",
+        "You cannot change this value once you set up.",
+      )
+      .withSupportIntroduced("201908")
+      .withExample("aQ8NSFFTrDjdYydClJKFOrLKgR6UzjvL")
+      .withValue("aQ8NSFFTrDjdYydClJKFOrLKgR6UzjvL")
+    section.requiredConfig("ENCRYPTION_SERVICE_SALT")
+      .withDescription(
+        "32 bytes of random string to use for ENCRYPTION_SERVICE_KEY as a salt.",
+        "You cannot change this value once you set up.",
+      )
+      .withSupportIntroduced("201908")
+      .withExample("q1eRUq0DqBgdEbKDvAvSNFBih6qyNrT5")
+      .withValue("q1eRUq0DqBgdEbKDvAvSNFBih6qyNrT5")
   })
 
   file.newSection([
@@ -318,6 +329,22 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
         "You cannot change the value."
       )
       .withExample("*")
+    section.requiredConfig("ENCRYPTION_SERVICE_KEY")
+      .withDescription(
+        "Random string to encrypt secret data.",
+        "You cannot change this value once you set up.",
+      )
+      .withSupportIntroduced("201908")
+      .withExample("IppyCqZsWGu6Px1A2qQAoIdkr4J6h8S0")
+      .withValue("IppyCqZsWGu6Px1A2qQAoIdkr4J6h8S0")
+    section.requiredConfig("ENCRYPTION_SERVICE_SALT")
+      .withDescription(
+        "32 bytes of random string to use for ENCRYPTION_SERVICE_KEY as a salt.",
+        "You cannot change this value once you set up.",
+      )
+      .withSupportIntroduced("201908")
+      .withExample("EaDFh02Df7TzbfDUUBXn6bIdaISc5ou1")
+      .withValue("EaDFh02Df7TzbfDUUBXn6bIdaISc5ou1")
   })
 
   file.newSection([
@@ -369,11 +396,6 @@ function generateCatpostConfig(config: Configuration): ConfigFile {
   file.newSection([
     "Encryption Configuration"
   ], section => {
-    section.requiredConfig("URL_ENCRYPTION_KEY").withValue(config.catpost.archiveURLEncryptionKey)
-      .withDescription(
-        "32 bytes of random string to encrypt URL pointing to repositories.",
-        "You cannot change this value once you set up."
-      )
     section.requiredConfig("ARCHIVE_ENCRYPTION_KEY").withValue(config.catpost.archiveEncryptionKey)
       .withDescription("Random string to make archive encrypted.")
     section.requiredConfig("ARCHIVE_NAME_SECRET").withValue(config.catpost.archiveNameSalt)
@@ -479,12 +501,6 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
     section.requiredConfig("API_SECRET").withValue(config.setaria.apiSecret)
       .withDescription("Random string to authenticate API access from sideci.")
 
-    section.requiredConfig("SSH_KEY_ENCRYPTION_KEY").withValue(config.setaria.sshSecretKeyEncryptionKey)
-      .withDescription(
-        "32 bytes of random string to encrypt SSH secret key associated to repositories.",
-        "You cannot change this value once you set up."
-      )
-
     section.requiredConfig("EXCEPTION_NOTIFIER_RECIPIENT_EMAILS")
       .withDescription("Comma-separated list of recipients for error reporting emails.")
 
@@ -513,6 +529,22 @@ function generateSetariaConfig(config: Configuration): ConfigFile {
       .withSupportIntroduced("201902")
       .withExample("1")
       .withValue("1")
+    section.requiredConfig("ENCRYPTION_SERVICE_KEY")
+      .withDescription(
+        "Random string to encrypt secret data.",
+        "You cannot change this value once you set up."
+      )
+      .withSupportIntroduced("201908")
+      .withExample("oFToypGCAekqPaPyK0P9vqty94nVuyNo")
+      .withValue("oFToypGCAekqPaPyK0P9vqty94nVuyNo")
+    section.requiredConfig("ENCRYPTION_SERVICE_SALT")
+      .withDescription(
+        "32 bytes of random string to use for ENCRYPTION_SERVICE_KEY as a salt.",
+        "You cannot change this value once you set up."
+      )
+      .withSupportIntroduced("201908")
+      .withExample("anglwu4rgRrHkhBcdmPUOr7Nn7j8Wbyy")
+      .withValue("anglwu4rgRrHkhBcdmPUOr7Nn7j8Wbyy")
   })
 
   file.newSection([
